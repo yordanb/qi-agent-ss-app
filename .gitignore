@@ -1,0 +1,21 @@
+# Flutter
+.android/
+.ios/
+build/
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+*.iml
+*.lock
+.DS_Store
+*.apk
+*.zip
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.settings/
+.project
+.classpath
