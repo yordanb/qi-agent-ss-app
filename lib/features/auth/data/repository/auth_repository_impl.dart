@@ -14,7 +14,11 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User> login(String nrp, String password) async {
     final response = await _datasource.login(LoginRequest(nrp: nrp, password: password));
 
-    // Save user session (no JWT — backend uses session-based auth)
+    // Save JWT tokens + user data
+    await _storage.saveTokens(
+      accessToken: response.accessToken,
+      refreshToken: response.refreshToken,
+    );
     await _storage.saveUser(
       nrp: response.user.nrp,
       nama: response.user.nama,

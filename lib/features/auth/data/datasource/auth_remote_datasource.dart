@@ -16,11 +16,10 @@ class AuthRemoteDatasource {
         ApiConstants.login,
         data: request.toJson(),
       );
-      // Backend returns {nrp, nama, dept, is_admin} — adapt to LoginResponse
       final data = response.data as Map<String, dynamic>;
       return LoginResponse(
-        accessToken: '',  // no JWT, use session-based
-        refreshToken: '',
+        accessToken: data['access_token'] ?? '',
+        refreshToken: data['refresh_token'] ?? '',
         user: UserModel(
           nrp: data['nrp'] ?? request.nrp,
           nama: data['nama'] ?? '',
