@@ -163,6 +163,10 @@ class ThemeSettingsScreen extends ConsumerWidget {
         return 'Modern & bold, kesan teknologi';
       case AppThemeColor.teal:
         return 'Segar & kekinian, nuansa alam';
+      case AppThemeColor.cyan:
+        return 'Cerah & energik, terinspirasi dari icon';
+      case AppThemeColor.lime:
+        return 'Vibrant & fresh, aksen hijau lime';
     }
   }
 }

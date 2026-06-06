@@ -1,7 +1,7 @@
 name: qi_agent_ss
 description: "Quality Innovation - Suggestion System & ESIC Tracking"
 publish_to: 'none'
-version: 1.0.0+1
+version: 5.5.4+1
 
 environment:
   sdk: ^3.5.4

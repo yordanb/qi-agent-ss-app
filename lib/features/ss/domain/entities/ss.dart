@@ -7,6 +7,7 @@ class Ss {
   final String? currentStatus;
   final String? source;
   final String? tanggalLaporan;
+  final String? gradeSs;
 
   const Ss({
     required this.noSs,
@@ -17,12 +18,13 @@ class Ss {
     this.currentStatus,
     this.source,
     this.tanggalLaporan,
+    this.gradeSs,
   });
 
   String get statusCategory {
     final s = (currentStatus ?? '').toLowerCase();
     if (s.contains('approved') || s.contains('closed')) return 'approved';
-    if (s.contains('menunggu') || s.contains('wait') || s.contains('pending')) return 'waiting';
+    if (s.contains('open') || s.contains('menunggu') || s.contains('wait') || s.contains('pending')) return 'waiting';
     return 'other';
   }
 }

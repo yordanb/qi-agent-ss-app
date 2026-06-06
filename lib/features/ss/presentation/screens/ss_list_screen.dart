@@ -67,7 +67,7 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
                 const SizedBox(width: 8),
                 _buildFilterChip('Approved', 'approved'),
                 const SizedBox(width: 8),
-                _buildFilterChip('Waiting', 'waiting'),
+                _buildFilterChip('Open', 'waiting'),
                 const SizedBox(width: 8),
                 _buildFilterChip('Other', 'other'),
               ],
@@ -126,6 +126,19 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
     );
   }
 
+  Color _gradeColor(String grade) {
+    switch (grade.toUpperCase()) {
+      case 'A': return Colors.green;
+      case 'B': return Colors.blue;
+      case 'C': return Colors.teal;
+      case 'D': return Colors.orange;
+      case 'E': return Colors.red;
+      case 'F': return Colors.deepPurple;
+      case 'O': return Colors.grey;
+      default: return Colors.grey;
+    }
+  }
+
   Widget _buildItem(Ss record) {
     final status = (record.currentStatus ?? '').toString().toUpperCase();
     final color = record.statusCategory == 'approved'
@@ -146,7 +159,7 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top row: icon + judul
+              // Top row: icon + judul + grade
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -174,6 +187,27 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
                       ],
                     ),
                   ),
+                  // Grade badge on right
+                  if (record.gradeSs != null && record.gradeSs!.isNotEmpty)
+                    Container(
+                      constraints: const BoxConstraints(minWidth: 38, minHeight: 38),
+                      margin: const EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                        color: _gradeColor(record.gradeSs!).withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: _gradeColor(record.gradeSs!), width: 1),
+                      ),
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                      child: Text(
+                        record.gradeSs!,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: _gradeColor(record.gradeSs!),
+                        ),
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: 10),

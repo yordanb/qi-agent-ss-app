@@ -26,6 +26,7 @@ class SsRepositoryImpl implements SsRepository {
           currentStatus: m.currentStatus,
           source: m.source,
           tanggalLaporan: m.tanggalLaporan,
+          gradeSs: m.gradeSs,
         );
       }).toList(),
     );

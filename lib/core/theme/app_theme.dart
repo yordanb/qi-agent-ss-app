@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum AppThemeColor { slate, indigo, teal }
+enum AppThemeColor { slate, indigo, teal, cyan, lime }
 
 class AppThemeData {
   final String name;
@@ -73,6 +73,42 @@ const Map<AppThemeColor, AppThemeData> appThemes = {
       onSecondary: Color(0xFF004D40),
       surface: Colors.white,
       onSurface: Color(0xFF004D40),
+      error: Colors.red,
+      onError: Colors.white,
+    ),
+  ),
+  AppThemeColor.cyan: AppThemeData(
+    name: 'Cyan',
+    primary: Color(0xFF0393EA),
+    primaryDark: Color(0xFF02142F),
+    primaryLight: Color(0xFF64C8FF),
+    accent: Color(0xFF01CFF4),
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: Color(0xFF0393EA),
+      onPrimary: Colors.white,
+      secondary: Color(0xFF01CFF4),
+      onSecondary: Color(0xFF001F3F),
+      surface: Colors.white,
+      onSurface: Color(0xFF02142F),
+      error: Colors.red,
+      onError: Colors.white,
+    ),
+  ),
+  AppThemeColor.lime: AppThemeData(
+    name: 'Lime',
+    primary: Color(0xFFABCE1A),
+    primaryDark: Color(0xFF02142F),
+    primaryLight: Color(0xFFD4F542),
+    accent: Color(0xFF01CFF4),
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: Color(0xFFABCE1A),
+      onPrimary: Color(0xFF02142F),
+      secondary: Color(0xFF01CFF4),
+      onSecondary: Color(0xFF001F3F),
+      surface: Colors.white,
+      onSurface: Color(0xFF02142F),
       error: Colors.red,
       onError: Colors.white,
     ),
