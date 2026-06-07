@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/network/dio_client.dart';
 
 class DeptDashboardScreen extends StatefulWidget {
   const DeptDashboardScreen({super.key});
@@ -30,12 +30,8 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
   Future<void> _load() async {
     setState(() { _loadingStats = true; _loadingDaily = true; _error = null; });
     try {
-      final dio = Dio(BaseOptions(
-        baseUrl: 'https://qi.mibt.my.id/api',
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 30),
-        headers: {'Accept': 'application/json'},
-      ));
+      final dioClient = DioClient();
+      final dio = dioClient.dio;
       final statsRes = await dio.get('${ApiConstants.deptStats}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
       if (mounted) setState(() { _stats = statsRes.data; _loadingStats = false; });
       final dailyRes = await dio.get('${ApiConstants.deptDaily}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
