@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/loading_widget.dart';
@@ -36,6 +37,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     super.initState();
     _initMonths();
     _effectiveNrp = widget.nrp;
+    _initLocale();
+  }
+
+  void _initLocale() {
+    initializeDateFormatting('id_ID', null).then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   void _initMonths() {
@@ -375,7 +383,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 String _formatLastUpdate(String raw) {
   if (raw == '-') return raw;
   try {
-    // Fix timezone format: +0800 → +08:00
     final fixed = raw.replaceAllMapped(RegExp(r'(\+|\-)(\d{2})(\d{2})$'), (m) => '${m[1]}${m[2]}:${m[3]}');
     final dt = DateTime.parse(fixed).toLocal();
     return DateFormat('dd MMM yyyy HH:mm', 'id_ID').format(dt);
