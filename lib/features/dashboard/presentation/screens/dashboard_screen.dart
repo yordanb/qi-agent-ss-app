@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -137,7 +138,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget _buildDashboardContent(DashboardStats? stats, String nrp) {
     final nama = (widget.nama.isNotEmpty ? widget.nama : (stats?.nama ?? '-'));
     final dept = stats?.dept ?? '-';
-    final lastUpdate = stats?.lastUpdate ?? '-';
+    final lastUpdate = _formatLastUpdate(stats?.lastUpdate ?? '-');
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -369,6 +370,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         ],
       ),
     );
+  }
+}
+
+String _formatLastUpdate(String raw) {
+  if (raw == '-') return raw;
+  try {
+    final dt = DateTime.parse(raw).toLocal();
+    return DateFormat('dd MMM yyyy HH:mm', 'id_ID').format(dt);
+  } catch (_) {
+    return raw;
   }
 }
 
