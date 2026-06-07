@@ -375,7 +375,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 String _formatLastUpdate(String raw) {
   if (raw == '-') return raw;
   try {
-    final dt = DateTime.parse(raw).toLocal();
+    // Fix timezone format: +0800 → +08:00
+    final fixed = raw.replaceAllMapped(RegExp(r'(\+|\-)(\d{2})(\d{2})$'), (m) => '${m[1]}${m[2]}:${m[3]}');
+    final dt = DateTime.parse(fixed).toLocal();
     return DateFormat('dd MMM yyyy HH:mm', 'id_ID').format(dt);
   } catch (_) {
     return raw;
