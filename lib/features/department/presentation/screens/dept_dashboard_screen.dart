@@ -131,11 +131,12 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
 
   Widget _statCard(String label, int value, Color color) {
     return Expanded(
-      child: Card(child: Padding(
-        padding: const EdgeInsets.all(16),
+      child: Card(margin: const EdgeInsets.symmetric(horizontal: 3), child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
         child: Column(children: [
-          Text('$value', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: color)),
-          Text(label, style: const TextStyle(fontSize: 12)),
+          FittedBox(child: Text('$value', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color))),
+          const SizedBox(height: 2),
+          Text(label, style: const TextStyle(fontSize: 10)),
         ]),
       )),
     );
