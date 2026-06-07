@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/network/auth_interceptor.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 
@@ -40,7 +41,7 @@ class _ApprovalPinScreenState extends ConsumerState<ApprovalPinScreen> {
     setState(() { _loading = true; _error = null; });
     try {
       final dio = Dio(BaseOptions(
-        baseUrl: 'https://qi.mibt.my.id/api',
+        baseUrl: AppConstants.baseUrl,
         headers: {'Accept': 'application/json'},
       ));
       final response = await dio.get(ApiConstants.pinGenerate);
@@ -78,7 +79,7 @@ class _ApprovalPinScreenState extends ConsumerState<ApprovalPinScreen> {
     setState(() { _verifying = true; _verifyResult = null; });
     try {
       final dio = Dio(BaseOptions(
-        baseUrl: 'https://qi.mibt.my.id/api',
+        baseUrl: AppConstants.baseUrl,
         headers: {'Accept': 'application/json'},
       ));
       final response = await dio.get('/upload/verify-pin', queryParameters: {'pin': inputPin});
