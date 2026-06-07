@@ -115,14 +115,28 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
   }
 
   Widget _buildStatCards(Map<String, dynamic> stats) {
-    final approved = stats['approved'] ?? 0;
-    final waiting = stats['waiting'] ?? 0;
-    final total = approved + waiting;
-    return Row(
+    final total = stats['total_ss'] ?? 0;
+    final closed = stats['closed'] ?? 0;
+    final waitApproval = stats['wait_approval'] ?? 0;
+    final outstanding = stats['outstanding'] ?? 0;
+    final other = stats['other'] ?? 0;
+    return Column(
       children: [
-        _statCard('Total', total, Colors.blue),
-        _statCard('Approved', approved, Colors.green),
-        _statCard('Waiting', waiting, Colors.indigo),
+        Row(
+          children: [
+            _statCard('Total', total, Colors.blue),
+            _statCard('Closed', closed, Colors.green),
+            _statCard('Wait Approval', waitApproval, Colors.indigo),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            _statCard('Outstanding', outstanding, Colors.orange),
+            _statCard('Other', other, Colors.grey),
+            const Expanded(child: SizedBox()),
+          ],
+        ),
       ],
     );
   }
