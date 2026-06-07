@@ -119,23 +119,12 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
     final closed = stats['closed'] ?? 0;
     final open = stats['open'] ?? 0;
     final other = stats['other'] ?? 0;
-    return Column(
+    return Row(
       children: [
-        Row(
-          children: [
-            _statCard('Total', total, Colors.blue),
-            _statCard('Closed', closed, Colors.green),
-            _statCard('Open', open, Colors.orange),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            _statCard('Other', other, Colors.grey),
-            const Expanded(child: SizedBox()),
-            const Expanded(child: SizedBox()),
-          ],
-        ),
+        _statCard('Total', total, Colors.blue),
+        _statCard('Closed', closed, Colors.green),
+        _statCard('Open', open, Colors.orange),
+        _statCard('Other', other, Colors.grey),
       ],
     );
   }
