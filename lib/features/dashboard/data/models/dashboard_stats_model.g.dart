@@ -14,8 +14,7 @@ _$DashBoardStatsModelImpl _$$DashBoardStatsModelImplFromJson(
       dept: json['dept'] as String,
       totalSs: (json['total_ss'] as num).toInt(),
       closed: (json['closed'] as num).toInt(),
-      outstanding: (json['outstanding'] as num).toInt(),
-      waitApproval: (json['wait_approval'] as num).toInt(),
+      open: (json['open'] as num).toInt(),
       other: (json['other'] as num).toInt(),
       lastUpdate: json['last_update'] as String?,
     );
@@ -28,8 +27,7 @@ Map<String, dynamic> _$$DashBoardStatsModelImplToJson(
       'dept': instance.dept,
       'total_ss': instance.totalSs,
       'closed': instance.closed,
-      'outstanding': instance.outstanding,
-      'wait_approval': instance.waitApproval,
+      'open': instance.open,
       'other': instance.other,
       'last_update': instance.lastUpdate,
     };

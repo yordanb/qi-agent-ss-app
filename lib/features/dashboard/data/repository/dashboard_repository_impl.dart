@@ -16,8 +16,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
       dept: model.dept,
       totalSs: model.totalSs,
       closed: model.closed,
-      outstanding: model.outstanding,
-      waitApproval: model.waitApproval,
+      open: model.open,
       other: model.other,
       lastUpdate: model.lastUpdate,
     );
@@ -29,7 +28,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
     return MonthlyStats(
       total: model.totalSs ?? 0,
       approved: model.closed ?? 0,
-      waiting: model.waitApproval ?? 0,
+      waiting: model.open ?? 0,
       other: model.other ?? 0,
     );
   }

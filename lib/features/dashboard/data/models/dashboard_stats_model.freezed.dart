@@ -26,9 +26,7 @@ mixin _$DashBoardStatsModel {
   @JsonKey(name: 'total_ss')
   int get totalSs => throw _privateConstructorUsedError;
   int get closed => throw _privateConstructorUsedError;
-  int get outstanding => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wait_approval')
-  int get waitApproval => throw _privateConstructorUsedError;
+  int get open => throw _privateConstructorUsedError;
   int get other => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_update')
   String? get lastUpdate => throw _privateConstructorUsedError;
@@ -55,8 +53,7 @@ abstract class $DashBoardStatsModelCopyWith<$Res> {
       String dept,
       @JsonKey(name: 'total_ss') int totalSs,
       int closed,
-      int outstanding,
-      @JsonKey(name: 'wait_approval') int waitApproval,
+      int open,
       int other,
       @JsonKey(name: 'last_update') String? lastUpdate});
 }
@@ -81,8 +78,7 @@ class _$DashBoardStatsModelCopyWithImpl<$Res, $Val extends DashBoardStatsModel>
     Object? dept = null,
     Object? totalSs = null,
     Object? closed = null,
-    Object? outstanding = null,
-    Object? waitApproval = null,
+    Object? open = null,
     Object? other = null,
     Object? lastUpdate = freezed,
   }) {
@@ -107,13 +103,9 @@ class _$DashBoardStatsModelCopyWithImpl<$Res, $Val extends DashBoardStatsModel>
           ? _value.closed
           : closed // ignore: cast_nullable_to_non_nullable
               as int,
-      outstanding: null == outstanding
-          ? _value.outstanding
-          : outstanding // ignore: cast_nullable_to_non_nullable
-              as int,
-      waitApproval: null == waitApproval
-          ? _value.waitApproval
-          : waitApproval // ignore: cast_nullable_to_non_nullable
+      open: null == open
+          ? _value.open
+          : open // ignore: cast_nullable_to_non_nullable
               as int,
       other: null == other
           ? _value.other
@@ -141,8 +133,7 @@ abstract class _$$DashBoardStatsModelImplCopyWith<$Res>
       String dept,
       @JsonKey(name: 'total_ss') int totalSs,
       int closed,
-      int outstanding,
-      @JsonKey(name: 'wait_approval') int waitApproval,
+      int open,
       int other,
       @JsonKey(name: 'last_update') String? lastUpdate});
 }
@@ -165,8 +156,7 @@ class __$$DashBoardStatsModelImplCopyWithImpl<$Res>
     Object? dept = null,
     Object? totalSs = null,
     Object? closed = null,
-    Object? outstanding = null,
-    Object? waitApproval = null,
+    Object? open = null,
     Object? other = null,
     Object? lastUpdate = freezed,
   }) {
@@ -191,13 +181,9 @@ class __$$DashBoardStatsModelImplCopyWithImpl<$Res>
           ? _value.closed
           : closed // ignore: cast_nullable_to_non_nullable
               as int,
-      outstanding: null == outstanding
-          ? _value.outstanding
-          : outstanding // ignore: cast_nullable_to_non_nullable
-              as int,
-      waitApproval: null == waitApproval
-          ? _value.waitApproval
-          : waitApproval // ignore: cast_nullable_to_non_nullable
+      open: null == open
+          ? _value.open
+          : open // ignore: cast_nullable_to_non_nullable
               as int,
       other: null == other
           ? _value.other
@@ -220,8 +206,7 @@ class _$DashBoardStatsModelImpl implements _DashBoardStatsModel {
       required this.dept,
       @JsonKey(name: 'total_ss') required this.totalSs,
       required this.closed,
-      required this.outstanding,
-      @JsonKey(name: 'wait_approval') required this.waitApproval,
+      required this.open,
       required this.other,
       @JsonKey(name: 'last_update') this.lastUpdate});
 
@@ -240,10 +225,7 @@ class _$DashBoardStatsModelImpl implements _DashBoardStatsModel {
   @override
   final int closed;
   @override
-  final int outstanding;
-  @override
-  @JsonKey(name: 'wait_approval')
-  final int waitApproval;
+  final int open;
   @override
   final int other;
   @override
@@ -252,7 +234,7 @@ class _$DashBoardStatsModelImpl implements _DashBoardStatsModel {
 
   @override
   String toString() {
-    return 'DashBoardStatsModel(nrp: $nrp, nama: $nama, dept: $dept, totalSs: $totalSs, closed: $closed, outstanding: $outstanding, waitApproval: $waitApproval, other: $other, lastUpdate: $lastUpdate)';
+    return 'DashBoardStatsModel(nrp: $nrp, nama: $nama, dept: $dept, totalSs: $totalSs, closed: $closed, open: $open, other: $other, lastUpdate: $lastUpdate)';
   }
 
   @override
@@ -265,10 +247,7 @@ class _$DashBoardStatsModelImpl implements _DashBoardStatsModel {
             (identical(other.dept, dept) || other.dept == dept) &&
             (identical(other.totalSs, totalSs) || other.totalSs == totalSs) &&
             (identical(other.closed, closed) || other.closed == closed) &&
-            (identical(other.outstanding, outstanding) ||
-                other.outstanding == outstanding) &&
-            (identical(other.waitApproval, waitApproval) ||
-                other.waitApproval == waitApproval) &&
+            (identical(other.open, open) || other.open == open) &&
             (identical(other.other, this.other) || other.other == this.other) &&
             (identical(other.lastUpdate, lastUpdate) ||
                 other.lastUpdate == lastUpdate));
@@ -276,8 +255,8 @@ class _$DashBoardStatsModelImpl implements _DashBoardStatsModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, nrp, nama, dept, totalSs, closed,
-      outstanding, waitApproval, other, lastUpdate);
+  int get hashCode => Object.hash(
+      runtimeType, nrp, nama, dept, totalSs, closed, open, other, lastUpdate);
 
   /// Create a copy of DashBoardStatsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -303,8 +282,7 @@ abstract class _DashBoardStatsModel implements DashBoardStatsModel {
           required final String dept,
           @JsonKey(name: 'total_ss') required final int totalSs,
           required final int closed,
-          required final int outstanding,
-          @JsonKey(name: 'wait_approval') required final int waitApproval,
+          required final int open,
           required final int other,
           @JsonKey(name: 'last_update') final String? lastUpdate}) =
       _$DashBoardStatsModelImpl;
@@ -324,10 +302,7 @@ abstract class _DashBoardStatsModel implements DashBoardStatsModel {
   @override
   int get closed;
   @override
-  int get outstanding;
-  @override
-  @JsonKey(name: 'wait_approval')
-  int get waitApproval;
+  int get open;
   @override
   int get other;
   @override

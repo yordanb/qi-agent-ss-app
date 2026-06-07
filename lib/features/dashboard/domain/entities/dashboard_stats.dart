@@ -4,8 +4,7 @@ class DashboardStats {
   final String dept;
   final int totalSs;
   final int closed;
-  final int outstanding;
-  final int waitApproval;
+  final int open;
   final int other;
   final String? lastUpdate;
 
@@ -15,8 +14,7 @@ class DashboardStats {
     required this.dept,
     required this.totalSs,
     required this.closed,
-    required this.outstanding,
-    required this.waitApproval,
+    required this.open,
     required this.other,
     this.lastUpdate,
   });

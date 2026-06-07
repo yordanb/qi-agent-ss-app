@@ -30,8 +30,7 @@ mixin _$MonthlyStatsModel {
   @JsonKey(name: 'total_ss')
   int? get totalSs => throw _privateConstructorUsedError;
   int get closed => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wait_approval')
-  int? get waitApproval => throw _privateConstructorUsedError;
+  int get open => throw _privateConstructorUsedError;
   int? get other => throw _privateConstructorUsedError;
 
   /// Serializes this MonthlyStatsModel to a JSON map.
@@ -59,7 +58,7 @@ abstract class $MonthlyStatsModelCopyWith<$Res> {
       @JsonKey(name: 'month_name') String? monthName,
       @JsonKey(name: 'total_ss') int? totalSs,
       int closed,
-      @JsonKey(name: 'wait_approval') int? waitApproval,
+      int open,
       int? other});
 }
 
@@ -86,7 +85,7 @@ class _$MonthlyStatsModelCopyWithImpl<$Res, $Val extends MonthlyStatsModel>
     Object? monthName = freezed,
     Object? totalSs = freezed,
     Object? closed = null,
-    Object? waitApproval = freezed,
+    Object? open = null,
     Object? other = freezed,
   }) {
     return _then(_value.copyWith(
@@ -122,10 +121,10 @@ class _$MonthlyStatsModelCopyWithImpl<$Res, $Val extends MonthlyStatsModel>
           ? _value.closed
           : closed // ignore: cast_nullable_to_non_nullable
               as int,
-      waitApproval: freezed == waitApproval
-          ? _value.waitApproval
-          : waitApproval // ignore: cast_nullable_to_non_nullable
-              as int?,
+      open: null == open
+          ? _value.open
+          : open // ignore: cast_nullable_to_non_nullable
+              as int,
       other: freezed == other
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
@@ -151,7 +150,7 @@ abstract class _$$MonthlyStatsModelImplCopyWith<$Res>
       @JsonKey(name: 'month_name') String? monthName,
       @JsonKey(name: 'total_ss') int? totalSs,
       int closed,
-      @JsonKey(name: 'wait_approval') int? waitApproval,
+      int open,
       int? other});
 }
 
@@ -176,7 +175,7 @@ class __$$MonthlyStatsModelImplCopyWithImpl<$Res>
     Object? monthName = freezed,
     Object? totalSs = freezed,
     Object? closed = null,
-    Object? waitApproval = freezed,
+    Object? open = null,
     Object? other = freezed,
   }) {
     return _then(_$MonthlyStatsModelImpl(
@@ -212,10 +211,10 @@ class __$$MonthlyStatsModelImplCopyWithImpl<$Res>
           ? _value.closed
           : closed // ignore: cast_nullable_to_non_nullable
               as int,
-      waitApproval: freezed == waitApproval
-          ? _value.waitApproval
-          : waitApproval // ignore: cast_nullable_to_non_nullable
-              as int?,
+      open: null == open
+          ? _value.open
+          : open // ignore: cast_nullable_to_non_nullable
+              as int,
       other: freezed == other
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
@@ -236,7 +235,7 @@ class _$MonthlyStatsModelImpl implements _MonthlyStatsModel {
       @JsonKey(name: 'month_name') this.monthName,
       @JsonKey(name: 'total_ss') this.totalSs,
       required this.closed,
-      @JsonKey(name: 'wait_approval') this.waitApproval,
+      required this.open,
       this.other});
 
   factory _$MonthlyStatsModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -261,14 +260,13 @@ class _$MonthlyStatsModelImpl implements _MonthlyStatsModel {
   @override
   final int closed;
   @override
-  @JsonKey(name: 'wait_approval')
-  final int? waitApproval;
+  final int open;
   @override
   final int? other;
 
   @override
   String toString() {
-    return 'MonthlyStatsModel(nrp: $nrp, nama: $nama, dept: $dept, year: $year, month: $month, monthName: $monthName, totalSs: $totalSs, closed: $closed, waitApproval: $waitApproval, other: $other)';
+    return 'MonthlyStatsModel(nrp: $nrp, nama: $nama, dept: $dept, year: $year, month: $month, monthName: $monthName, totalSs: $totalSs, closed: $closed, open: $open, other: $other)';
   }
 
   @override
@@ -285,15 +283,14 @@ class _$MonthlyStatsModelImpl implements _MonthlyStatsModel {
                 other.monthName == monthName) &&
             (identical(other.totalSs, totalSs) || other.totalSs == totalSs) &&
             (identical(other.closed, closed) || other.closed == closed) &&
-            (identical(other.waitApproval, waitApproval) ||
-                other.waitApproval == waitApproval) &&
+            (identical(other.open, open) || other.open == open) &&
             (identical(other.other, this.other) || other.other == this.other));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, nrp, nama, dept, year, month,
-      monthName, totalSs, closed, waitApproval, other);
+      monthName, totalSs, closed, open, other);
 
   /// Create a copy of MonthlyStatsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -322,7 +319,7 @@ abstract class _MonthlyStatsModel implements MonthlyStatsModel {
       @JsonKey(name: 'month_name') final String? monthName,
       @JsonKey(name: 'total_ss') final int? totalSs,
       required final int closed,
-      @JsonKey(name: 'wait_approval') final int? waitApproval,
+      required final int open,
       final int? other}) = _$MonthlyStatsModelImpl;
 
   factory _MonthlyStatsModel.fromJson(Map<String, dynamic> json) =
@@ -347,8 +344,7 @@ abstract class _MonthlyStatsModel implements MonthlyStatsModel {
   @override
   int get closed;
   @override
-  @JsonKey(name: 'wait_approval')
-  int? get waitApproval;
+  int get open;
   @override
   int? get other;
 

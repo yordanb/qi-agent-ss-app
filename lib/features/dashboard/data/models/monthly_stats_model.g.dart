@@ -17,7 +17,7 @@ _$MonthlyStatsModelImpl _$$MonthlyStatsModelImplFromJson(
       monthName: json['month_name'] as String?,
       totalSs: (json['total_ss'] as num?)?.toInt(),
       closed: (json['closed'] as num).toInt(),
-      waitApproval: (json['wait_approval'] as num?)?.toInt(),
+      open: (json['open'] as num).toInt(),
       other: (json['other'] as num?)?.toInt(),
     );
 
@@ -32,6 +32,6 @@ Map<String, dynamic> _$$MonthlyStatsModelImplToJson(
       'month_name': instance.monthName,
       'total_ss': instance.totalSs,
       'closed': instance.closed,
-      'wait_approval': instance.waitApproval,
+      'open': instance.open,
       'other': instance.other,
     };

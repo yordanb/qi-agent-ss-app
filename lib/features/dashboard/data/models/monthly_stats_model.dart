@@ -14,7 +14,7 @@ class MonthlyStatsModel with _$MonthlyStatsModel {
     @JsonKey(name: 'month_name') String? monthName,
     @JsonKey(name: 'total_ss') int? totalSs,
     required int closed,
-    @JsonKey(name: 'wait_approval') int? waitApproval,
+    required int open,
     int? other,
   }) = _MonthlyStatsModel;
 

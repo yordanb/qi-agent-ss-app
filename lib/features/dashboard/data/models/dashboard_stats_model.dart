@@ -11,8 +11,7 @@ class DashBoardStatsModel with _$DashBoardStatsModel {
     required String dept,
     @JsonKey(name: 'total_ss') required int totalSs,
     required int closed,
-    required int outstanding,
-    @JsonKey(name: 'wait_approval') required int waitApproval,
+    required int open,
     required int other,
     @JsonKey(name: 'last_update') String? lastUpdate,
   }) = _DashBoardStatsModel;
