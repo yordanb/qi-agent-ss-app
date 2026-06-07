@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/network/auth_interceptor.dart';
+import '../../../../core/storage/secure_storage_service.dart';
 
 class ApprovalPinScreen extends ConsumerStatefulWidget {
   const ApprovalPinScreen({super.key});
@@ -18,6 +20,9 @@ class _ApprovalPinScreenState extends ConsumerState<ApprovalPinScreen> {
   bool _loading = true;
   String? _error;
   Timer? _timer;
+  final TextEditingController _pinInputController = TextEditingController();
+  bool _verifying = false;
+  String? _verifyResult;
 
   @override
   void initState() {
@@ -62,6 +67,36 @@ class _ApprovalPinScreenState extends ConsumerState<ApprovalPinScreen> {
       }
       if (mounted) setState(() => _remainingSeconds--);
     });
+  }
+
+  Future<void> _verifyPin() async {
+    final inputPin = _pinInputController.text.trim();
+    if (inputPin.length != 6) {
+      setState(() { _verifyResult = 'PIN harus 6 digit'; });
+      return;
+    }
+    setState(() { _verifying = true; _verifyResult = null; });
+    try {
+      final dio = Dio(BaseOptions(
+        baseUrl: 'https://qi.mibt.my.id/api',
+        headers: {'Accept': 'application/json'},
+      ));
+      final response = await dio.get('/upload/verify-pin', queryParameters: {'pin': inputPin});
+      final valid = response.data['valid'] as bool? ?? false;
+      if (mounted) {
+        setState(() {
+          _verifying = false;
+          _verifyResult = valid ? '✅ PIN Benar! Data boleh di-upload' : '❌ PIN Salah!';
+        });
+        if (valid) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: const Text('PIN verified! Silakan upload data'), backgroundColor: Colors.green),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) setState(() { _verifying = false; _verifyResult = 'Error: $e'; });
+    }
   }
 
   @override
