@@ -46,6 +46,14 @@ class AuthRemoteDatasource {
     }
   }
 
+  Future<void> logout() async {
+    try {
+      await _dio.post(ApiConstants.logout);
+    } on DioException {
+      // Best-effort: ignore errors on logout
+    }
+  }
+
   NetworkException _handleError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout) {

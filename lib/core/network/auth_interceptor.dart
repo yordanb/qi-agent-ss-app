@@ -1,10 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../storage/secure_storage_service.dart';
+import '../../features/auth/presentation/providers/login_provider.dart';
 
 class AuthInterceptor extends Interceptor {
   final SecureStorageService _storage;
+  Ref? _ref;
 
   AuthInterceptor(this._storage);
+
+  /// Dipanggil sekali dari DioClient setelah ProviderScope tersedia
+  void setRef(Ref ref) {
+    _ref = ref;
+  }
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
@@ -23,8 +31,9 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      // Token expired — bisa di-extend dengan refresh token logic
+      // Token expired — clear storage + trigger Riverpod logout
       await _storage.clearAll();
+      _ref?.read(loginNotifierProvider.notifier).forceLogout();
       return handler.next(err);
     }
     return handler.next(err);

@@ -34,4 +34,9 @@ class LoginNotifier extends _$LoginNotifier {
     await repo.logout();
     state = const AsyncData(null);
   }
+
+  /// Force logout from interceptor (no API call, just clear + notify)
+  void forceLogout() {
+    state = const AsyncData(null);
+  }
 }

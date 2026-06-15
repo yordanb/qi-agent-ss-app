@@ -22,11 +22,12 @@ class QIApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeNotifierProvider);
+    final router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       title: 'QI',
       debugShowCheckedModeBanner: false,
       theme: theme.lightTheme,
-      routerConfig: AppRouter.router,
+      routerConfig: router,
     );
   }
 }

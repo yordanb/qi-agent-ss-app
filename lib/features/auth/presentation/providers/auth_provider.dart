@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/network/dio_client.dart';
+import '../../../../core/network/auth_interceptor.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../data/datasource/auth_remote_datasource.dart';
 import '../../data/repository/auth_repository_impl.dart';
@@ -11,7 +12,16 @@ part 'auth_provider.g.dart';
 SecureStorageService secureStorage(ref) => SecureStorageService();
 
 @riverpod
-DioClient dioClient(ref) => DioClient(storage: ref.read(secureStorageProvider));
+DioClient dioClient(ref) {
+  final client = DioClient(storage: ref.read(secureStorageProvider));
+  // Inject Ref ke AuthInterceptor agar bisa trigger forceLogout
+  final authInterceptors = client.dio.interceptors
+      .whereType<AuthInterceptor>();
+  if (authInterceptors.isNotEmpty) {
+    authInterceptors.first.setRef(ref);
+  }
+  return client;
+}
 
 @riverpod
 AuthRemoteDatasource authRemoteDatasource(ref) {

@@ -24,7 +24,7 @@ final secureStorageProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SecureStorageRef = AutoDisposeProviderRef<SecureStorageService>;
-String _$dioClientHash() => r'069269469007ef379b7be34d6719315728067d59';
+String _$dioClientHash() => r'82e2d54bf3c0ff67b9058eae3e138aee5943fd8b';
 
 /// See also [dioClient].
 @ProviderFor(dioClient)

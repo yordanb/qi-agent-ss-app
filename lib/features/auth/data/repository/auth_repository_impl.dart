@@ -39,6 +39,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
+    // Optional: notify backend (best-effort, don't fail if network error)
+    try {
+      await _datasource.logout();
+    } catch (_) {}
     await _storage.clearAll();
   }
 
