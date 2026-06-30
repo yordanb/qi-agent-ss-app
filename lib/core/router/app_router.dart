@@ -77,7 +77,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           return DashboardScreen(
             nrp: extra['nrp'] ?? '',
             nama: extra['nama'] ?? '',
-            isAdmin: extra['is_admin'] ?? false,
+            role: extra['role'] ?? 'user',
           );
         },
       ),

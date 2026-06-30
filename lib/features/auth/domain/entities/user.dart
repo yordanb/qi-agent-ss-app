@@ -1,7 +1,7 @@
 class User {
   final String nrp;
   final String nama;
-  final bool isAdmin;
+  final String role;
 
-  const User({required this.nrp, required this.nama, required this.isAdmin});
+  const User({required this.nrp, required this.nama, required this.role});
 }

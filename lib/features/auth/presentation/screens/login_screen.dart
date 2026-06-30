@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           context.go('/dashboard', extra: {
             'nrp': user.nrp,
             'nama': user.nama,
-            'is_admin': user.isAdmin,
+            'role': user.role,
           });
         }
       });

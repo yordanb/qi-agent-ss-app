@@ -3,5 +3,5 @@ class StorageKeys {
   static const String refreshToken = 'refresh_token';
   static const String userNrp = 'user_nrp';
   static const String userName = 'user_name';
-  static const String isAdmin = 'is_admin';
+  static const String userRole = 'user_role';
 }

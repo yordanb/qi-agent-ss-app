@@ -22,7 +22,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   String get nrp => throw _privateConstructorUsedError;
   String get nama => throw _privateConstructorUsedError;
-  bool get isAdmin => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String nrp, String nama, bool isAdmin});
+  $Res call({String nrp, String nama, String role});
 }
 
 /// @nodoc
@@ -59,7 +59,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? nrp = null,
     Object? nama = null,
-    Object? isAdmin = null,
+    Object? role = null,
   }) {
     return _then(_value.copyWith(
       nrp: null == nrp
@@ -70,10 +70,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.nama
           : nama // ignore: cast_nullable_to_non_nullable
               as String,
-      isAdmin: null == isAdmin
-          ? _value.isAdmin
-          : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -86,7 +86,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String nrp, String nama, bool isAdmin});
+  $Res call({String nrp, String nama, String role});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? nrp = null,
     Object? nama = null,
-    Object? isAdmin = null,
+    Object? role = null,
   }) {
     return _then(_$UserModelImpl(
       nrp: null == nrp
@@ -115,10 +115,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.nama
           : nama // ignore: cast_nullable_to_non_nullable
               as String,
-      isAdmin: null == isAdmin
-          ? _value.isAdmin
-          : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -127,7 +127,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserModelImpl implements _UserModel {
   const _$UserModelImpl(
-      {required this.nrp, required this.nama, required this.isAdmin});
+      {required this.nrp, required this.nama, required this.role});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -137,11 +137,11 @@ class _$UserModelImpl implements _UserModel {
   @override
   final String nama;
   @override
-  final bool isAdmin;
+  final String role;
 
   @override
   String toString() {
-    return 'UserModel(nrp: $nrp, nama: $nama, isAdmin: $isAdmin)';
+    return 'UserModel(nrp: $nrp, nama: $nama, role: $role)';
   }
 
   @override
@@ -151,12 +151,12 @@ class _$UserModelImpl implements _UserModel {
             other is _$UserModelImpl &&
             (identical(other.nrp, nrp) || other.nrp == nrp) &&
             (identical(other.nama, nama) || other.nama == nama) &&
-            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, nrp, nama, isAdmin);
+  int get hashCode => Object.hash(runtimeType, nrp, nama, role);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -178,7 +178,7 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {required final String nrp,
       required final String nama,
-      required final bool isAdmin}) = _$UserModelImpl;
+      required final String role}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -188,7 +188,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get nama;
   @override
-  bool get isAdmin;
+  String get role;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.

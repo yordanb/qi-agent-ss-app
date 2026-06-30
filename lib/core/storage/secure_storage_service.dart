@@ -30,11 +30,11 @@ class SecureStorageService {
     }
   }
 
-  Future<void> saveUser({required String nrp, required String nama, required bool isAdmin}) async {
+  Future<void> saveUser({required String nrp, required String nama, required String role}) async {
     try {
       await _storage.write(key: StorageKeys.userNrp, value: nrp);
       await _storage.write(key: StorageKeys.userName, value: nama);
-      await _storage.write(key: StorageKeys.isAdmin, value: isAdmin.toString());
+      await _storage.write(key: StorageKeys.userRole, value: role);
     } catch (_) {}
   }
 
@@ -54,11 +54,11 @@ class SecureStorageService {
     }
   }
 
-  Future<bool> getIsAdmin() async {
+  Future<String?> getUserRole() async {
     try {
-      return (await _storage.read(key: StorageKeys.isAdmin)) == 'true';
+      return await _storage.read(key: StorageKeys.userRole);
     } catch (_) {
-      return false;
+      return null;
     }
   }
 

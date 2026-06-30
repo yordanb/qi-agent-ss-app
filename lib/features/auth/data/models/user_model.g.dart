@@ -10,12 +10,12 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
     _$UserModelImpl(
       nrp: json['nrp'] as String,
       nama: json['nama'] as String,
-      isAdmin: json['isAdmin'] as bool,
+      role: json['role'] as String,
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
     <String, dynamic>{
       'nrp': instance.nrp,
       'nama': instance.nama,
-      'isAdmin': instance.isAdmin,
+      'role': instance.role,
     };

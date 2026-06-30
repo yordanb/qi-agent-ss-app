@@ -13,13 +13,13 @@ import '../providers/dashboard_provider.dart';
 class DashboardScreen extends ConsumerStatefulWidget {
   final String nrp;
   final String nama;
-  final bool isAdmin;
+  final String role;
 
   const DashboardScreen({
     super.key,
     this.nrp = '',
     this.nama = '',
-    this.isAdmin = false,
+    this.role = 'user',
   });
 
   @override
@@ -81,7 +81,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               if (nrp.isNotEmpty) ref.invalidate(dashboardNotifierProvider(nrp));
             },
           ),
-          if (widget.isAdmin)
+          if (widget.role == 'admin')
             IconButton(
               icon: const Icon(Icons.verified_user),
               tooltip: 'Approval PIN',
@@ -106,7 +106,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               }
             },
             itemBuilder: (context) => [
-              if (widget.isAdmin)
+              if (widget.role == 'admin')
                 const PopupMenuItem(value: 'manpower', child: Row(children: [Icon(Icons.group, size: 20), SizedBox(width: 8), Text('Manajemen Manpower')])),
               const PopupMenuItem(value: 'theme', child: Row(children: [Icon(Icons.palette, size: 20), SizedBox(width: 8), Text('Pilih Tema')])),
               const PopupMenuItem(value: 'change_password', child: Row(children: [Icon(Icons.key, size: 20), SizedBox(width: 8), Text('Ganti Password')])),
@@ -178,7 +178,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   CircleAvatar(
                     radius: 32,
                     backgroundColor: Colors.white.withOpacity(0.2),
-                    child: widget.isAdmin
+                    child: widget.role == 'admin'
                         ? const Icon(Icons.admin_panel_settings, size: 32, color: Colors.white)
                         : const Icon(Icons.person, size: 32, color: Colors.white),
                   ),
@@ -239,7 +239,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             const SizedBox(height: 16),
 
             // Coverage SS Card (admin only, collapsible)
-            if (widget.isAdmin)
+            if (widget.role == 'admin')
               _buildCoverageExpansion(nrp, dept),
           ],
         ),

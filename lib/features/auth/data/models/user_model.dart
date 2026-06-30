@@ -8,7 +8,7 @@ class UserModel with _$UserModel {
   const factory UserModel({
     required String nrp,
     required String nama,
-    required bool isAdmin,
+    required String role,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);

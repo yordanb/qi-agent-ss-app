@@ -17,13 +17,14 @@ class AuthRemoteDatasource {
         data: request.toJson(),
       );
       final data = response.data as Map<String, dynamic>;
+      final userData = data['user'] as Map<String, dynamic>? ?? {};
       return LoginResponse(
         accessToken: data['access_token'] ?? '',
         refreshToken: data['refresh_token'] ?? '',
         user: UserModel(
-          nrp: data['nrp'] ?? request.nrp,
-          nama: data['nama'] ?? '',
-          isAdmin: data['is_admin'] ?? false,
+          nrp: userData['nrp'] ?? request.nrp,
+          nama: userData['nama'] ?? '',
+          role: userData['role'] ?? 'user',
         ),
       );
     } on DioException catch (e) {

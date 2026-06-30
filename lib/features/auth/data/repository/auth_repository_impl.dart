@@ -22,13 +22,13 @@ class AuthRepositoryImpl implements AuthRepository {
     await _storage.saveUser(
       nrp: response.user.nrp,
       nama: response.user.nama,
-      isAdmin: response.user.isAdmin,
+      role: response.user.role,
     );
 
     return User(
       nrp: response.user.nrp,
       nama: response.user.nama,
-      isAdmin: response.user.isAdmin,
+      role: response.user.role,
     );
   }
 
@@ -39,7 +39,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    // Optional: notify backend (best-effort, don't fail if network error)
     try {
       await _datasource.logout();
     } catch (_) {}
@@ -50,8 +49,8 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User?> getCurrentUser() async {
     final nrp = await _storage.getUserNrp();
     final nama = await _storage.getUserName();
-    final isAdmin = await _storage.getIsAdmin();
+    final role = await _storage.getUserRole();
     if (nrp == null) return null;
-    return User(nrp: nrp, nama: nama ?? '', isAdmin: isAdmin);
+    return User(nrp: nrp, nama: nama ?? '', role: role ?? 'user');
   }
 }
