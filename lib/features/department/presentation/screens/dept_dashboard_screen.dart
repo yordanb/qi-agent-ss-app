@@ -68,7 +68,10 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
                   child: DropdownButtonFormField<String>(
                     value: _selectedDept,
                     decoration: const InputDecoration(labelText: 'Departemen', border: OutlineInputBorder()),
-                    items: ['SPL2', 'STYR'].map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
+                    items: [
+                      'SPL2',
+                      if (_selectedYear == 2025) 'STYR',
+                    ].map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
                     onChanged: (v) { setState(() => _selectedDept = v!); _load(); },
                   ),
                 ),
@@ -87,7 +90,15 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
                     value: _selectedYear,
                     decoration: const InputDecoration(labelText: 'Tahun', border: OutlineInputBorder()),
                     items: [2025, 2026].map((y) => DropdownMenuItem(value: y, child: Text(y.toString()))).toList(),
-                    onChanged: (v) { setState(() => _selectedYear = v!); _load(); },
+                    onChanged: (v) {
+                    setState(() {
+                      _selectedYear = v!;
+                      if (_selectedYear != 2025 && _selectedDept == 'STYR') {
+                        _selectedDept = 'SPL2';
+                      }
+                      _load();
+                    });
+                  },
                   ),
                 ),
               ],

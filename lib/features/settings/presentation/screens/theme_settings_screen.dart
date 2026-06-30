@@ -157,16 +157,12 @@ class ThemeSettingsScreen extends ConsumerWidget {
 
   String _themeDescription(AppThemeColor t) {
     switch (t) {
-      case AppThemeColor.slate:
-        return 'Elegan & profesional, warna default';
       case AppThemeColor.indigo:
         return 'Modern & bold, kesan teknologi';
       case AppThemeColor.teal:
         return 'Segar & kekinian, nuansa alam';
       case AppThemeColor.cyan:
         return 'Cerah & energik, terinspirasi dari icon';
-      case AppThemeColor.lime:
-        return 'Vibrant & fresh, aksen hijau lime';
     }
   }
 }

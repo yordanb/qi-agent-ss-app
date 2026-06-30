@@ -8,6 +8,7 @@ class ManpowerItem {
   final int targetSs;
   final String status;
   final String jabatan;
+  final bool isActive;
 
   const ManpowerItem({
     required this.id,
@@ -19,6 +20,7 @@ class ManpowerItem {
     required this.targetSs,
     required this.status,
     required this.jabatan,
+    required this.isActive,
   });
 
   factory ManpowerItem.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class ManpowerItem {
       targetSs: (json['target_ss'] as num?)?.toInt() ?? 0,
       status: json['status'] as String? ?? '',
       jabatan: json['jabatan'] as String? ?? '',
+      isActive: json['is_active'] as bool? ?? true,
     );
   }
 }

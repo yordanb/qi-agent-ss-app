@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum AppThemeColor { slate, indigo, teal, cyan, lime }
+enum AppThemeColor { indigo, teal, cyan }
 
 class AppThemeData {
   final String name;
@@ -23,24 +23,6 @@ class AppThemeData {
 }
 
 const Map<AppThemeColor, AppThemeData> appThemes = {
-  AppThemeColor.slate: AppThemeData(
-    name: 'Slate',
-    primary: Color(0xFF546E7A),
-    primaryDark: Color(0xFF37474F),
-    primaryLight: Color(0xFF78909C),
-    accent: Color(0xFF78909C),
-    colorScheme: ColorScheme(
-      brightness: Brightness.light,
-      primary: Color(0xFF546E7A),
-      onPrimary: Colors.white,
-      secondary: Color(0xFF78909C),
-      onSecondary: Colors.white,
-      surface: Colors.white,
-      onSurface: Color(0xFF263238),
-      error: Colors.red,
-      onError: Colors.white,
-    ),
-  ),
   AppThemeColor.indigo: AppThemeData(
     name: 'Indigo',
     primary: Color(0xFF3F51B5),
@@ -95,28 +77,10 @@ const Map<AppThemeColor, AppThemeData> appThemes = {
       onError: Colors.white,
     ),
   ),
-  AppThemeColor.lime: AppThemeData(
-    name: 'Lime',
-    primary: Color(0xFFABCE1A),
-    primaryDark: Color(0xFF02142F),
-    primaryLight: Color(0xFFD4F542),
-    accent: Color(0xFF01CFF4),
-    colorScheme: ColorScheme(
-      brightness: Brightness.light,
-      primary: Color(0xFFABCE1A),
-      onPrimary: Color(0xFF02142F),
-      secondary: Color(0xFF01CFF4),
-      onSecondary: Color(0xFF001F3F),
-      surface: Colors.white,
-      onSurface: Color(0xFF02142F),
-      error: Colors.red,
-      onError: Colors.white,
-    ),
-  ),
 };
 
 class ThemeNotifier extends ChangeNotifier {
-  AppThemeColor _current = AppThemeColor.slate;
+  AppThemeColor _current = AppThemeColor.indigo;
   SharedPreferences? _prefs;
 
   AppThemeColor get current => _current;
@@ -124,10 +88,10 @@ class ThemeNotifier extends ChangeNotifier {
 
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
-    final saved = _prefs?.getString('app_theme') ?? 'slate';
+    final saved = _prefs?.getString('app_theme') ?? 'indigo';
     _current = AppThemeColor.values.firstWhere(
       (e) => e.name == saved,
-      orElse: () => AppThemeColor.slate,
+      orElse: () => AppThemeColor.indigo,
     );
     notifyListeners();
   }

@@ -57,6 +57,14 @@ class ManpowerCudDatasource {
     }
   }
 
+  Future<void> updateStatus(String nrp, bool isActive) async {
+    try {
+      await _dio.patch('/ss/manpower/$nrp/status', queryParameters: {'is_active': isActive});
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   NetworkException _handleError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
       return NetworkException.timeout();

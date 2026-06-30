@@ -72,6 +72,7 @@ class _ManpowerFormScreenState extends ConsumerState<ManpowerFormScreen> {
     try {
       final dio = ref.read(dioClientProvider).dio;
       final data = _formData();
+      data['is_active'] = _status == 'Aktif';
       if (_isEdit) {
         await dio.put('/manpower/${widget.item!.id}', data: data);
       } else {
@@ -119,8 +120,6 @@ class _ManpowerFormScreenState extends ConsumerState<ManpowerFormScreen> {
                 ),
                 items: const [
                   DropdownMenuItem(value: 'Aktif', child: Text('Aktif')),
-                  DropdownMenuItem(value: 'Cuti', child: Text('Cuti')),
-                  DropdownMenuItem(value: 'Pindah', child: Text('Pindah')),
                   DropdownMenuItem(value: 'Non-aktif', child: Text('Non-aktif')),
                 ],
                 onChanged: (v) => setState(() => _status = v ?? 'Aktif'),

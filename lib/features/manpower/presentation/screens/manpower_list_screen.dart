@@ -152,9 +152,11 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
 
   Widget _itemCard(ManpowerItem item) {
     final theme = Theme.of(context);
+    final isNotActive = !item.isActive;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: isNotActive ? Colors.grey[100] : null,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () async {
@@ -170,7 +172,12 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item.nama, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                    Row(
+                      children: [
+                        Expanded(child: Text(item.nama, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15))),
+                        _badge(item.status, item.status == 'Aktif' ? Colors.green : Colors.red),
+                      ],
+                    ),
                     const SizedBox(height: 2),
                     Text('NRP: ${item.nrp}', style: TextStyle(color: Colors.grey[600], fontSize: 12)),
                     const SizedBox(height: 4),
@@ -182,6 +189,7 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
                         _badge(item.crew, Colors.indigo),
                         _badge(item.posisi, Colors.teal),
                         if (item.targetSs > 0) _badge('Target: ${item.targetSs} SS', Colors.orange),
+                        if (!item.isActive) _badge('Tidak Aktif', Colors.red),
                       ],
                     ),
                   ],
