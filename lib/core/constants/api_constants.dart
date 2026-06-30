@@ -17,6 +17,7 @@ class ApiConstants {
   // Dept
   static const String deptStats = '/ss/dept/stats';
   static const String deptDaily = '/ss/dept/daily';
+  static const String deptEiictm = '/ss/dept/eiictm';
 
   // PIN
   static const String pinGenerate = '/upload/pin';

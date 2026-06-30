@@ -17,8 +17,10 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
 
   Map<String, dynamic>? _stats;
   List<dynamic> _daily = [];
+  Map<String, dynamic>? _eiictmStats;
   bool _loadingStats = true;
   bool _loadingDaily = true;
+  bool _loadingEiictm = true;
   String? _error;
 
   @override
@@ -28,7 +30,7 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
   }
 
   Future<void> _load() async {
-    setState(() { _loadingStats = true; _loadingDaily = true; _error = null; });
+    setState(() { _loadingStats = true; _loadingDaily = true; _loadingEiictm = true; _error = null; });
     try {
       final dioClient = DioClient();
       final dio = dioClient.dio;
@@ -36,8 +38,10 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
       if (mounted) setState(() { _stats = statsRes.data; _loadingStats = false; });
       final dailyRes = await dio.get('${ApiConstants.deptDaily}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
       if (mounted) setState(() { _daily = dailyRes.data; _loadingDaily = false; });
+      final eiictmRes = await dio.get('${ApiConstants.deptEiictm}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
+      if (mounted) setState(() { _eiictmStats = eiictmRes.data; _loadingEiictm = false; });
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loadingStats = false; _loadingDaily = false; });
+      if (mounted) setState(() { _error = e.toString(); _loadingStats = false; _loadingDaily = false; _loadingEiictm = false; });
     }
   }
 
@@ -102,6 +106,13 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
             else if (_stats != null)
               _buildStatCards(_stats!),
             const SizedBox(height: 24),
+            const Text('EIICTM Status', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            if (_loadingEiictm)
+              const SizedBox(height: 100, child: Center(child: CircularProgressIndicator()))
+            else if (_eiictmStats != null)
+              _buildEiictmCard(_eiictmStats!),
+            const SizedBox(height: 24),
             const Text('Grafik Harian', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             if (_loadingDaily)
@@ -119,12 +130,26 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
     final closed = stats['closed'] ?? 0;
     final open = stats['open'] ?? 0;
     final other = stats['other'] ?? 0;
-    return Row(
+    final breakdown = stats['breakdown'] as Map<String, dynamic>? ?? {};
+    
+    return Column(
       children: [
-        _statCard('Total', total, Colors.blue),
-        _statCard('Closed', closed, Colors.green),
-        _statCard('Open', open, Colors.orange),
-        _statCard('Other', other, Colors.grey),
+        Row(
+          children: [
+            _statCard('Total', total, Colors.blue),
+            _statCard('Closed', closed, Colors.green),
+            _statCard('Open', open, Colors.orange),
+            _statCard('Other', other, Colors.grey),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            _statCard('Open GL/SH', breakdown['open_gl_sh'] ?? 0, Colors.orangeAccent),
+            _statCard('Open DH', breakdown['open_dh'] ?? 0, Colors.deepOrange),
+            _statCard('Open PM', breakdown['open_pm'] ?? 0, Colors.redAccent),
+          ],
+        ),
       ],
     );
   }
@@ -142,8 +167,18 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
     );
   }
 
+  Widget _buildEiictmCard(Map<String, dynamic> data) {
+    final total = data['total'] ?? 0;
+    final have = data['have_ss'] ?? 0;
+    final no = data['no_ss'] ?? 0;
+    return Row(children: [
+      _statCard('Total NRP', total, Colors.blue),
+      _statCard('Punya SS', have, Colors.green),
+      _statCard('Belum SS', no, Colors.red),
+    ]);
+  }
+
   Widget _buildBarChart(List<dynamic> daily) {
-    if (daily.isEmpty) return const Text('Tidak ada data');
     final maxCount = daily.map((d) => (d['count'] as int? ?? 0)).fold<int>(0, (a, b) => a > b ? a : b);
     return SizedBox(
       height: 250,
