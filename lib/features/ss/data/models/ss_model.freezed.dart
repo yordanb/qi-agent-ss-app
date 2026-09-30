@@ -21,7 +21,8 @@ SsModel _$SsModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SsModel {
   @JsonKey(name: 'no_ss')
-  String get noSs => throw _privateConstructorUsedError;
+  String get noSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   String get judul => throw _privateConstructorUsedError;
   String get nrp => throw _privateConstructorUsedError;
   String? get nama => throw _privateConstructorUsedError;
@@ -29,28 +30,39 @@ mixin _$SsModel {
   String? get divisi => throw _privateConstructorUsedError;
   String? get distrik => throw _privateConstructorUsedError;
   @JsonKey(name: 'tanggal_laporan')
-  String? get tanggalLaporan => throw _privateConstructorUsedError;
+  String? get tanggalLaporan =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'grade_ss')
-  String? get gradeSs => throw _privateConstructorUsedError;
+  String? get gradeSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'kualitas_ss')
-  String? get kualitasSs => throw _privateConstructorUsedError;
+  String? get kualitasSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'kategori_ss')
-  String? get kategoriSs => throw _privateConstructorUsedError;
+  String? get kategoriSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'reward_ss')
-  double? get rewardSs => throw _privateConstructorUsedError;
+  double? get rewardSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'status_karyawan')
-  String? get statusKaryawan => throw _privateConstructorUsedError;
+  String? get statusKaryawan =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'manfaat_financial')
-  double? get manfaatFinancial => throw _privateConstructorUsedError;
+  double? get manfaatFinancial =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'tanggal_menilai')
-  String? get tanggalMenilai => throw _privateConstructorUsedError;
+  String? get tanggalMenilai =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'dinilai_oleh')
-  String? get dinilaiOleh => throw _privateConstructorUsedError;
+  String? get dinilaiOleh =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'current_status')
-  String? get currentStatus => throw _privateConstructorUsedError;
+  String? get currentStatus =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   String? get source => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
 
@@ -392,6 +404,7 @@ class _$SsModelImpl implements _SsModel {
   @override
   @JsonKey(name: 'no_ss')
   final String noSs;
+// ignore: invalid_annotation_target
   @override
   final String judul;
   @override
@@ -407,38 +420,49 @@ class _$SsModelImpl implements _SsModel {
   @override
   @JsonKey(name: 'tanggal_laporan')
   final String? tanggalLaporan;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'grade_ss')
   final String? gradeSs;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'kualitas_ss')
   final String? kualitasSs;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'kategori_ss')
   final String? kategoriSs;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'reward_ss')
   final double? rewardSs;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'status_karyawan')
   final String? statusKaryawan;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'manfaat_financial')
   final double? manfaatFinancial;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'tanggal_menilai')
   final String? tanggalMenilai;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'dinilai_oleh')
   final String? dinilaiOleh;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'current_status')
   final String? currentStatus;
+// ignore: invalid_annotation_target
   @override
   final String? source;
   @override
   @JsonKey(name: 'created_at')
   final String? createdAt;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
@@ -555,7 +579,7 @@ abstract class _SsModel implements SsModel {
 
   @override
   @JsonKey(name: 'no_ss')
-  String get noSs;
+  String get noSs; // ignore: invalid_annotation_target
   @override
   String get judul;
   @override
@@ -570,39 +594,39 @@ abstract class _SsModel implements SsModel {
   String? get distrik;
   @override
   @JsonKey(name: 'tanggal_laporan')
-  String? get tanggalLaporan;
+  String? get tanggalLaporan; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'grade_ss')
-  String? get gradeSs;
+  String? get gradeSs; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'kualitas_ss')
-  String? get kualitasSs;
+  String? get kualitasSs; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'kategori_ss')
-  String? get kategoriSs;
+  String? get kategoriSs; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'reward_ss')
-  double? get rewardSs;
+  double? get rewardSs; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'status_karyawan')
-  String? get statusKaryawan;
+  String? get statusKaryawan; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'manfaat_financial')
-  double? get manfaatFinancial;
+  double? get manfaatFinancial; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'tanggal_menilai')
-  String? get tanggalMenilai;
+  String? get tanggalMenilai; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'dinilai_oleh')
-  String? get dinilaiOleh;
+  String? get dinilaiOleh; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'current_status')
-  String? get currentStatus;
+  String? get currentStatus; // ignore: invalid_annotation_target
   @override
   String? get source;
   @override
   @JsonKey(name: 'created_at')
-  String? get createdAt;
+  String? get createdAt; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;

@@ -26,9 +26,11 @@ mixin _$MonthlyStatsModel {
   int get year => throw _privateConstructorUsedError;
   int get month => throw _privateConstructorUsedError;
   @JsonKey(name: 'month_name')
-  String? get monthName => throw _privateConstructorUsedError;
+  String? get monthName =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'total_ss')
-  int? get totalSs => throw _privateConstructorUsedError;
+  int? get totalSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   int get closed => throw _privateConstructorUsedError;
   int get open => throw _privateConstructorUsedError;
   int? get other => throw _privateConstructorUsedError;
@@ -254,9 +256,11 @@ class _$MonthlyStatsModelImpl implements _MonthlyStatsModel {
   @override
   @JsonKey(name: 'month_name')
   final String? monthName;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'total_ss')
   final int? totalSs;
+// ignore: invalid_annotation_target
   @override
   final int closed;
   @override
@@ -337,10 +341,10 @@ abstract class _MonthlyStatsModel implements MonthlyStatsModel {
   int get month;
   @override
   @JsonKey(name: 'month_name')
-  String? get monthName;
+  String? get monthName; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'total_ss')
-  int? get totalSs;
+  int? get totalSs; // ignore: invalid_annotation_target
   @override
   int get closed;
   @override

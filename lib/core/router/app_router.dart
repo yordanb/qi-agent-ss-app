@@ -13,6 +13,9 @@ import '../../features/settings/presentation/screens/theme_settings_screen.dart'
 import '../../features/manpower/presentation/screens/manpower_list_screen.dart';
 import '../../features/manpower/presentation/screens/manpower_form_screen.dart';
 import '../../features/manpower/data/models/manpower_item.dart';
+import '../../features/users/presentation/screens/user_list_screen.dart';
+import '../../features/users/presentation/screens/user_form_screen.dart';
+import '../../features/users/domain/entities/user.dart';
 
 /// Notifies GoRouter when auth state changes (login/logout).
 class RouterNotifier extends ChangeNotifier {
@@ -121,6 +124,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/manpower-form',
         builder: (context, state) {
           return ManpowerFormScreen(item: state.extra as ManpowerItem?);
+        },
+      ),
+      GoRoute(
+        path: '/users',
+        builder: (context, state) => const UserListScreen(),
+      ),
+      GoRoute(
+        path: '/users-form',
+        builder: (context, state) {
+          return UserFormScreen(user: state.extra as User?);
         },
       ),
     ],

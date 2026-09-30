@@ -96,6 +96,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             onSelected: (value) {
               if (value == 'manpower') {
                 context.push('/manpower');
+              } else if (value == 'users') {
+                context.push('/users');
               } else if (value == 'theme') {
                 context.push('/theme-settings');
               } else if (value == 'change_password') {
@@ -108,6 +110,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             itemBuilder: (context) => [
               if (widget.role == 'admin')
                 const PopupMenuItem(value: 'manpower', child: Row(children: [Icon(Icons.group, size: 20), SizedBox(width: 8), Text('Manajemen Manpower')])),
+              if (widget.role == 'admin')
+                const PopupMenuItem(value: 'users', child: Row(children: [Icon(Icons.manage_accounts, size: 20), SizedBox(width: 8), Text('Manajemen User')])),
               const PopupMenuItem(value: 'theme', child: Row(children: [Icon(Icons.palette, size: 20), SizedBox(width: 8), Text('Pilih Tema')])),
               const PopupMenuItem(value: 'change_password', child: Row(children: [Icon(Icons.key, size: 20), SizedBox(width: 8), Text('Ganti Password')])),
               const PopupMenuItem(value: 'logout', child: Row(children: [Icon(Icons.logout, size: 20), SizedBox(width: 8), Text('Logout')])),

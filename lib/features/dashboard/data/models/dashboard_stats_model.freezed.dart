@@ -24,7 +24,8 @@ mixin _$DashBoardStatsModel {
   String get nama => throw _privateConstructorUsedError;
   String get dept => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_ss')
-  int get totalSs => throw _privateConstructorUsedError;
+  int get totalSs =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   int get closed => throw _privateConstructorUsedError;
   int get open => throw _privateConstructorUsedError;
   int get other => throw _privateConstructorUsedError;
@@ -222,6 +223,7 @@ class _$DashBoardStatsModelImpl implements _DashBoardStatsModel {
   @override
   @JsonKey(name: 'total_ss')
   final int totalSs;
+// ignore: invalid_annotation_target
   @override
   final int closed;
   @override
@@ -298,7 +300,7 @@ abstract class _DashBoardStatsModel implements DashBoardStatsModel {
   String get dept;
   @override
   @JsonKey(name: 'total_ss')
-  int get totalSs;
+  int get totalSs; // ignore: invalid_annotation_target
   @override
   int get closed;
   @override

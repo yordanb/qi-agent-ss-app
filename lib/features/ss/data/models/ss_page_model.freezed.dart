@@ -23,7 +23,8 @@ mixin _$SsPageModel {
   int get total => throw _privateConstructorUsedError;
   int get page => throw _privateConstructorUsedError;
   @JsonKey(name: 'page_size')
-  int get pageSize => throw _privateConstructorUsedError;
+  int get pageSize =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   List<dynamic> get data => throw _privateConstructorUsedError;
 
   /// Serializes this SsPageModel to a JSON map.
@@ -164,7 +165,9 @@ class _$SsPageModelImpl implements _SsPageModel {
   @override
   @JsonKey(name: 'page_size')
   final int pageSize;
+// ignore: invalid_annotation_target
   final List<dynamic> _data;
+// ignore: invalid_annotation_target
   @override
   List<dynamic> get data {
     if (_data is EqualUnmodifiableListView) return _data;
@@ -226,7 +229,7 @@ abstract class _SsPageModel implements SsPageModel {
   int get page;
   @override
   @JsonKey(name: 'page_size')
-  int get pageSize;
+  int get pageSize; // ignore: invalid_annotation_target
   @override
   List<dynamic> get data;
 

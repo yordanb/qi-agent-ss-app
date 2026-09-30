@@ -28,11 +28,14 @@ mixin _$SnapshotModel {
   String? get distrik => throw _privateConstructorUsedError;
   String? get posisi => throw _privateConstructorUsedError;
   @JsonKey(name: 'snapshot_date')
-  String? get snapshotDate => throw _privateConstructorUsedError;
+  String? get snapshotDate =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'dokumen_diakses')
-  String? get dokumenDiakses => throw _privateConstructorUsedError;
+  String? get dokumenDiakses =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'dokumen_mtd')
-  String? get dokumenMtd => throw _privateConstructorUsedError;
+  String? get dokumenMtd =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'monthly_metrics')
   Map<String, dynamic>? get monthlyMetrics =>
       throw _privateConstructorUsedError;
@@ -277,13 +280,17 @@ class _$SnapshotModelImpl implements _SnapshotModel {
   @override
   @JsonKey(name: 'snapshot_date')
   final String? snapshotDate;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'dokumen_diakses')
   final String? dokumenDiakses;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'dokumen_mtd')
   final String? dokumenMtd;
+// ignore: invalid_annotation_target
   final Map<String, dynamic>? _monthlyMetrics;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'monthly_metrics')
   Map<String, dynamic>? get monthlyMetrics {
@@ -387,13 +394,13 @@ abstract class _SnapshotModel implements SnapshotModel {
   String? get posisi;
   @override
   @JsonKey(name: 'snapshot_date')
-  String? get snapshotDate;
+  String? get snapshotDate; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'dokumen_diakses')
-  String? get dokumenDiakses;
+  String? get dokumenDiakses; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'dokumen_mtd')
-  String? get dokumenMtd;
+  String? get dokumenMtd; // ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'monthly_metrics')
   Map<String, dynamic>? get monthlyMetrics;
