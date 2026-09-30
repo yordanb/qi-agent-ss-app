@@ -11,8 +11,8 @@ class MonthlyStatsModel with _$MonthlyStatsModel {
     required String dept,
     required int year,
     required int month,
-    @JsonKey(name: 'month_name') String? monthName,
-    @JsonKey(name: 'total_ss') int? totalSs,
+    @JsonKey(name: 'month_name') String? monthName, // ignore: invalid_annotation_target
+    @JsonKey(name: 'total_ss') int? totalSs, // ignore: invalid_annotation_target
     required int closed,
     required int open,
     int? other,

@@ -8,7 +8,7 @@ class SsPageModel with _$SsPageModel {
   const factory SsPageModel({
     required int total,
     required int page,
-    @JsonKey(name: 'page_size') required int pageSize,
+    @JsonKey(name: 'page_size') required int pageSize, // ignore: invalid_annotation_target
     required List<dynamic> data,
   }) = _SsPageModel;
 

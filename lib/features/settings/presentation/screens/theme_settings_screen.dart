@@ -44,7 +44,7 @@ class ThemeSettingsScreen extends ConsumerWidget {
                         color: selected ? data.primary : Colors.grey[300]!,
                         width: selected ? 2 : 1,
                       ),
-                      color: selected ? data.primary.withOpacity(0.05) : Colors.white,
+                      color: selected ? data.primary.withValues(alpha: 0.05) : Colors.white,
                     ),
                     child: Row(
                       children: [
@@ -61,7 +61,7 @@ class ThemeSettingsScreen extends ConsumerWidget {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: data.primary.withOpacity(0.3),
+                                color: data.primary.withValues(alpha: 0.3),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -111,7 +111,7 @@ class ThemeSettingsScreen extends ConsumerWidget {
                         Container(
                           width: 40, height: 40,
                           decoration: BoxDecoration(
-                            color: appThemes[current]!.primary.withOpacity(0.1),
+                            color: appThemes[current]!.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(Icons.dashboard, color: appThemes[current]!.primary),
@@ -121,7 +121,7 @@ class ThemeSettingsScreen extends ConsumerWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: appThemes[current]!.primary.withOpacity(0.15),
+                            color: appThemes[current]!.primary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text('Active', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: appThemes[current]!.primary)),

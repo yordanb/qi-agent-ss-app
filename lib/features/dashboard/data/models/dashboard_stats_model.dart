@@ -9,11 +9,11 @@ class DashBoardStatsModel with _$DashBoardStatsModel {
     required String nrp,
     required String nama,
     required String dept,
-    @JsonKey(name: 'total_ss') required int totalSs,
+    @JsonKey(name: 'total_ss') required int totalSs, // ignore: invalid_annotation_target
     required int closed,
     required int open,
     required int other,
-    @JsonKey(name: 'last_update') String? lastUpdate,
+    @JsonKey(name: 'last_update') String? lastUpdate, // ignore: invalid_annotation_target
   }) = _DashBoardStatsModel;
 
   factory DashBoardStatsModel.fromJson(Map<String, dynamic> json) =>

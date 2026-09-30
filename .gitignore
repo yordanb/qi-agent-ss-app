@@ -19,3 +19,8 @@ build/
 .settings/
 .project
 .classpath
+
+# Security - Keystore
+android/keystore.properties
+android/*.jks
+android/*.keystore

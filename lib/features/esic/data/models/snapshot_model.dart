@@ -13,10 +13,10 @@ class SnapshotModel with _$SnapshotModel {
     String? divisi,
     String? distrik,
     String? posisi,
-    @JsonKey(name: 'snapshot_date') String? snapshotDate,
-    @JsonKey(name: 'dokumen_diakses') String? dokumenDiakses,
-    @JsonKey(name: 'dokumen_mtd') String? dokumenMtd,
-    @JsonKey(name: 'monthly_metrics') Map<String, dynamic>? monthlyMetrics,
+    @JsonKey(name: 'snapshot_date') String? snapshotDate, // ignore: invalid_annotation_target
+    @JsonKey(name: 'dokumen_diakses') String? dokumenDiakses, // ignore: invalid_annotation_target
+    @JsonKey(name: 'dokumen_mtd') String? dokumenMtd, // ignore: invalid_annotation_target
+    @JsonKey(name: 'monthly_metrics') Map<String, dynamic>? monthlyMetrics, // ignore: invalid_annotation_target
   }) = _SnapshotModel;
 
   factory SnapshotModel.fromJson(Map<String, dynamic> json) => _$SnapshotModelFromJson(json);

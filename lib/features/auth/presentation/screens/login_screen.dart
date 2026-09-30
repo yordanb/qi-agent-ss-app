@@ -65,9 +65,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const Icon(Icons.lightbulb, size: 64, color: Colors.blueGrey),
                 const SizedBox(height: 16),
                 const Text('Quality Innovation',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueGrey)),
                 const SizedBox(height: 4),
-                const Text('Suggestion System',
+                const Text('Make Imaginatiton Become True',
                     style: TextStyle(fontSize: 14, color: Colors.blueGrey)),
                 const SizedBox(height: 32),
                 TextField(
@@ -89,8 +92,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     prefixIcon: const Icon(Icons.lock),
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      icon: Icon(_obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
                   onSubmitted: (_) => _login(),
@@ -104,7 +110,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   error: (e, _) => Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: Text(
-                      e?.toString() ?? 'Terjadi kesalahan',
+                      e.toString(),
                       style: const TextStyle(color: Colors.red),
                       textAlign: TextAlign.center,
                     ),
@@ -122,7 +128,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text('v4.1.0 • SPL2 & STYR',
+                const Text('v5.1.1',
                     style: TextStyle(fontSize: 12, color: Colors.grey)),
               ],
             ),

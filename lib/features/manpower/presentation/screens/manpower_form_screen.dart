@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../data/models/manpower_item.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 
 class ManpowerFormScreen extends ConsumerStatefulWidget {
   final ManpowerItem? item;
@@ -80,7 +80,11 @@ class _ManpowerFormScreenState extends ConsumerState<ManpowerFormScreen> {
       }
       if (mounted) context.pop(true);
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Gagal: $e'), backgroundColor: Colors.red));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal: $e'), backgroundColor: Colors.red),
+        );
+      }
     } finally {
       if (mounted) setState(() => _saving = false);
     }

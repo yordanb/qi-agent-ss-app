@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/repository/auth_repository.dart';
 import '../providers/auth_provider.dart';
 
 class ChangePasswordScreen extends ConsumerStatefulWidget {

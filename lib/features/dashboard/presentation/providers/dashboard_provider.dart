@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../core/network/dio_client.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../data/datasource/dashboard_remote_datasource.dart';
 import '../../data/repository/dashboard_repository_impl.dart';

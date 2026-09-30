@@ -44,7 +44,6 @@ class RouterNotifier extends ChangeNotifier {
 
     // Logged in but on login → redirect to dashboard
     if (loggedIn && path == '/login') {
-      final user = _ref.read(loginNotifierProvider).valueOrNull;
       return '/dashboard';
     }
 

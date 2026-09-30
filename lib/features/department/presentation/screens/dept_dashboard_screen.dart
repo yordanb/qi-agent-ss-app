@@ -1,52 +1,136 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/api_constants.dart';
-import '../../../../core/network/dio_client.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 
-class DeptDashboardScreen extends StatefulWidget {
-  const DeptDashboardScreen({super.key});
+// State for department dashboard
+class DeptDashboardState {
+  final String selectedDept;
+  final int selectedYear;
+  final int selectedMonth;
+  final Map<String, dynamic>? stats;
+  final List<dynamic> daily;
+  final Map<String, dynamic>? eiictmStats;
+  final bool loadingStats;
+  final bool loadingDaily;
+  final bool loadingEiictm;
+  final String? error;
 
-  @override
-  State<DeptDashboardScreen> createState() => _DeptDashboardScreenState();
+  const DeptDashboardState({
+    this.selectedDept = 'SPL2',
+    this.selectedYear = 2025,
+    this.selectedMonth = 1,
+    this.stats,
+    this.daily = const [],
+    this.eiictmStats,
+    this.loadingStats = true,
+    this.loadingDaily = true,
+    this.loadingEiictm = true,
+    this.error,
+  });
+
+  DeptDashboardState copyWith({
+    String? selectedDept,
+    int? selectedYear,
+    int? selectedMonth,
+    Map<String, dynamic>? stats,
+    List<dynamic>? daily,
+    Map<String, dynamic>? eiictmStats,
+    bool? loadingStats,
+    bool? loadingDaily,
+    bool? loadingEiictm,
+    String? error,
+  }) {
+    return DeptDashboardState(
+      selectedDept: selectedDept ?? this.selectedDept,
+      selectedYear: selectedYear ?? this.selectedYear,
+      selectedMonth: selectedMonth ?? this.selectedMonth,
+      stats: stats ?? this.stats,
+      daily: daily ?? this.daily,
+      eiictmStats: eiictmStats ?? this.eiictmStats,
+      loadingStats: loadingStats ?? this.loadingStats,
+      loadingDaily: loadingDaily ?? this.loadingDaily,
+      loadingEiictm: loadingEiictm ?? this.loadingEiictm,
+      error: error ?? this.error,
+    );
+  }
 }
 
-class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
-  String _selectedDept = 'SPL2';
-  int _selectedYear = DateTime.now().year;
-  int _selectedMonth = DateTime.now().month;
-
-  Map<String, dynamic>? _stats;
-  List<dynamic> _daily = [];
-  Map<String, dynamic>? _eiictmStats;
-  bool _loadingStats = true;
-  bool _loadingDaily = true;
-  bool _loadingEiictm = true;
-  String? _error;
-
+// Notifier for department dashboard (using Riverpod 2.x Notifier)
+class DeptDashboardNotifier extends Notifier<DeptDashboardState> {
   @override
-  void initState() {
-    super.initState();
-    _load();
+  DeptDashboardState build() {
+    return DeptDashboardState(
+      selectedYear: DateTime.now().year,
+      selectedMonth: DateTime.now().month,
+    );
   }
 
-  Future<void> _load() async {
-    setState(() { _loadingStats = true; _loadingDaily = true; _loadingEiictm = true; _error = null; });
+  Future<void> load() async {
+    state = state.copyWith(
+      loadingStats: true,
+      loadingDaily: true,
+      loadingEiictm: true,
+      error: null,
+    );
     try {
-      final dioClient = DioClient();
-      final dio = dioClient.dio;
-      final statsRes = await dio.get('${ApiConstants.deptStats}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
-      if (mounted) setState(() { _stats = statsRes.data; _loadingStats = false; });
-      final dailyRes = await dio.get('${ApiConstants.deptDaily}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
-      if (mounted) setState(() { _daily = dailyRes.data; _loadingDaily = false; });
-      final eiictmRes = await dio.get('${ApiConstants.deptEiictm}/$_selectedDept', queryParameters: {'year': _selectedYear, 'month': _selectedMonth});
-      if (mounted) setState(() { _eiictmStats = eiictmRes.data; _loadingEiictm = false; });
+      final dio = ref.read(dioClientProvider).dio;
+      final statsRes = await dio.get(
+        '${ApiConstants.deptStats}/${state.selectedDept}',
+        queryParameters: {'year': state.selectedYear, 'month': state.selectedMonth},
+      );
+      state = state.copyWith(stats: statsRes.data, loadingStats: false);
+
+      final dailyRes = await dio.get(
+        '${ApiConstants.deptDaily}/${state.selectedDept}',
+        queryParameters: {'year': state.selectedYear, 'month': state.selectedMonth},
+      );
+      state = state.copyWith(daily: dailyRes.data, loadingDaily: false);
+
+      final eiictmRes = await dio.get(
+        '${ApiConstants.deptEiictm}/${state.selectedDept}',
+        queryParameters: {'year': state.selectedYear, 'month': state.selectedMonth},
+      );
+      state = state.copyWith(eiictmStats: eiictmRes.data, loadingEiictm: false);
     } catch (e) {
-      if (mounted) setState(() { _error = e.toString(); _loadingStats = false; _loadingDaily = false; _loadingEiictm = false; });
+      state = state.copyWith(
+        error: e.toString(),
+        loadingStats: false,
+        loadingDaily: false,
+        loadingEiictm: false,
+      );
     }
   }
 
+  void setDept(String dept) {
+    state = state.copyWith(selectedDept: dept);
+    load();
+  }
+
+  void setMonth(int month) {
+    state = state.copyWith(selectedMonth: month);
+    load();
+  }
+
+  void setYear(int year) {
+    final dept = (year != 2025 && state.selectedDept == 'STYR') ? 'SPL2' : state.selectedDept;
+    state = state.copyWith(selectedYear: year, selectedDept: dept);
+    load();
+  }
+}
+
+// Provider
+final deptDashboardProvider = NotifierProvider<DeptDashboardNotifier, DeptDashboardState>(DeptDashboardNotifier.new);
+
+class DeptDashboardScreen extends ConsumerWidget {
+  const DeptDashboardScreen({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(deptDashboardProvider);
+    final notifier = ref.read(deptDashboardProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard Departemen'),
@@ -54,7 +138,13 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
         foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () { if (context.canPop()) context.pop(); else context.go('/dashboard'); },
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/dashboard');
+            }
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -66,70 +156,64 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    value: _selectedDept,
+                    value: state.selectedDept,
                     decoration: const InputDecoration(labelText: 'Departemen', border: OutlineInputBorder()),
                     items: [
                       'SPL2',
-                      if (_selectedYear == 2025) 'STYR',
+                      if (state.selectedYear == 2025) 'STYR',
                     ].map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
-                    onChanged: (v) { setState(() => _selectedDept = v!); _load(); },
+                    onChanged: (v) => notifier.setDept(v!),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: DropdownButtonFormField<int>(
-                    value: _selectedMonth,
+                    value: state.selectedMonth,
                     decoration: const InputDecoration(labelText: 'Bulan', border: OutlineInputBorder()),
-                    items: List.generate(12, (i) => i + 1).map((m) => DropdownMenuItem(value: m, child: Text(m.toString().padLeft(2, '0')))).toList(),
-                    onChanged: (v) { setState(() => _selectedMonth = v!); _load(); },
+                    items: List.generate(12, (i) => i + 1)
+                        .map((m) => DropdownMenuItem(value: m, child: Text(m.toString().padLeft(2, '0'))))
+                        .toList(),
+                    onChanged: (v) => notifier.setMonth(v!),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: DropdownButtonFormField<int>(
-                    value: _selectedYear,
+                    value: state.selectedYear,
                     decoration: const InputDecoration(labelText: 'Tahun', border: OutlineInputBorder()),
                     items: [2025, 2026].map((y) => DropdownMenuItem(value: y, child: Text(y.toString()))).toList(),
-                    onChanged: (v) {
-                    setState(() {
-                      _selectedYear = v!;
-                      if (_selectedYear != 2025 && _selectedDept == 'STYR') {
-                        _selectedDept = 'SPL2';
-                      }
-                      _load();
-                    });
-                  },
+                    onChanged: (v) => notifier.setYear(v!),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            if (_loadingStats)
+            if (state.loadingStats)
               const Center(child: CircularProgressIndicator())
-            else if (_error != null)
+            else if (state.error != null)
               Column(children: [
                 const Icon(Icons.error_outline, size: 48, color: Colors.red),
                 const SizedBox(height: 8),
-                Text('Error: $_error', style: const TextStyle(color: Colors.red)),
+                Text('Error: ${state.error}', style: const TextStyle(color: Colors.red)),
                 const SizedBox(height: 8),
-                ElevatedButton(onPressed: _load, child: const Text('Coba Lagi')),
+                ElevatedButton(onPressed: () => notifier.load(), child: const Text('Coba Lagi')),
               ])
-            else if (_stats != null)
-              _buildStatCards(_stats!),
+            else if (state.stats != null)
+              _buildStatCards(state.stats!),
             const SizedBox(height: 24),
             const Text('EIICTM Status', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            if (_loadingEiictm)
+            if (state.loadingEiictm)
               const SizedBox(height: 100, child: Center(child: CircularProgressIndicator()))
-            else if (_eiictmStats != null)
-              _buildEiictmCard(_eiictmStats!),
+            else if (state.eiictmStats != null)
+              _buildEiictmCard(state.eiictmStats!),
             const SizedBox(height: 24),
             const Text('Grafik Harian', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            if (_loadingDaily)
+            if (state.loadingDaily)
               const SizedBox(height: 200, child: Center(child: CircularProgressIndicator()))
             else
-              _buildBarChart(_daily),
+              _buildBarChart(state.daily),
           ],
         ),
       ),
@@ -142,7 +226,7 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
     final open = stats['open'] ?? 0;
     final other = stats['other'] ?? 0;
     final breakdown = stats['breakdown'] as Map<String, dynamic>? ?? {};
-    
+
     return Column(
       children: [
         Row(
@@ -167,14 +251,17 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
 
   Widget _statCard(String label, int value, Color color) {
     return Expanded(
-      child: Card(margin: const EdgeInsets.symmetric(horizontal: 3), child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
-        child: Column(children: [
-          FittedBox(child: Text('$value', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color))),
-          const SizedBox(height: 2),
-          Text(label, style: const TextStyle(fontSize: 10)),
-        ]),
-      )),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 3),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+          child: Column(children: [
+            FittedBox(child: Text('$value', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color))),
+            const SizedBox(height: 2),
+            Text(label, style: const TextStyle(fontSize: 10)),
+          ]),
+        ),
+      ),
     );
   }
 
@@ -217,7 +304,7 @@ class _DeptDashboardScreenState extends State<DeptDashboardScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text('$day', style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                Text('$day', style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
               ],
             ),
           );

@@ -112,9 +112,10 @@ class ThemeNotifier extends ChangeNotifier {
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
+        titleTextStyle: const TextStyle(
+            fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 1,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         clipBehavior: Clip.antiAlias,
@@ -123,7 +124,8 @@ class ThemeNotifier extends ChangeNotifier {
         style: ElevatedButton.styleFrom(
           backgroundColor: t.primary,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         ),
       ),
@@ -134,8 +136,9 @@ class ThemeNotifier extends ChangeNotifier {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: Colors.white,
-        indicatorColor: t.primary.withOpacity(0.15),
-        labelTextStyle: MaterialStateProperty.all(const TextStyle(fontSize: 11)),
+        indicatorColor: t.primary.withValues(alpha: 0.15),
+        labelTextStyle:
+            WidgetStateProperty.all(const TextStyle(fontSize: 11)),
       ),
       chipTheme: ChipThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

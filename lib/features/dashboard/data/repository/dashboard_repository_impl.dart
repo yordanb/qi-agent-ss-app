@@ -27,8 +27,8 @@ class DashboardRepositoryImpl implements DashboardRepository {
     final model = await _datasource.getMonthlyStats(nrp, year, month);
     return MonthlyStats(
       total: model.totalSs ?? 0,
-      approved: model.closed ?? 0,
-      waiting: model.open ?? 0,
+      approved: model.closed,
+      waiting: model.open,
       other: model.other ?? 0,
     );
   }

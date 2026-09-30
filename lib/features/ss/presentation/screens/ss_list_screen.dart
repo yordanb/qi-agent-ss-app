@@ -165,7 +165,7 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                    decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
                     child: Icon(Icons.lightbulb, size: 20, color: color),
                   ),
                   const SizedBox(width: 12),
@@ -181,7 +181,7 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
                         // Status badge below title
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(color: color.withOpacity(0.15), borderRadius: BorderRadius.circular(6)),
+                          decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(6)),
                           child: Text(status, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color, letterSpacing: 0.5)),
                         ),
                       ],
@@ -193,7 +193,7 @@ class _SsListScreenState extends ConsumerState<SsListScreen> {
                       constraints: const BoxConstraints(minWidth: 38, minHeight: 38),
                       margin: const EdgeInsets.only(left: 8),
                       decoration: BoxDecoration(
-                        color: _gradeColor(record.gradeSs!).withOpacity(0.15),
+                        color: _gradeColor(record.gradeSs!).withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: _gradeColor(record.gradeSs!), width: 1),
                       ),

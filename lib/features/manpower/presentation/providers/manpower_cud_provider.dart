@@ -1,8 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../core/network/dio_client.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../data/datasource/manpower_cud_datasource.dart';
-import '../../data/models/manpower_item.dart';
 
 part 'manpower_cud_provider.g.dart';
 

@@ -164,20 +164,20 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
                     Theme.of(context).colorScheme.primary,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.3), blurRadius: 12, offset: const Offset(0, 4))],
+                boxShadow: [BoxShadow(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3), blurRadius: 12, offset: const Offset(0, 4))],
               ),
               child: Row(
                 children: [
                   CircleAvatar(
                     radius: 32,
-                    backgroundColor: Colors.white.withOpacity(0.2),
+                    backgroundColor: Colors.white.withValues(alpha: 0.2),
                     child: widget.role == 'admin'
                         ? const Icon(Icons.admin_panel_settings, size: 32, color: Colors.white)
                         : const Icon(Icons.person, size: 32, color: Colors.white),
@@ -189,13 +189,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       children: [
                         Text(nama, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
                         const SizedBox(height: 4),
-                        Text('NRP: $nrp', style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 13)),
-                        Text('Dept: $dept', style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 13)),
+                        Text('NRP: $nrp', style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 13)),
+                        Text('Dept: $dept', style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 13)),
                         const SizedBox(height: 4),
                         Row(children: [
-                          Icon(Icons.update, size: 12, color: Colors.white.withOpacity(0.6)),
+                          Icon(Icons.update, size: 12, color: Colors.white.withValues(alpha: 0.6)),
                           const SizedBox(width: 4),
-                          Text('Update: $lastUpdate', style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 11)),
+                          Text('Update: $lastUpdate', style: TextStyle(color: Colors.white.withValues(alpha: 0.6), fontSize: 11)),
                         ]),
                       ],
                     ),
@@ -344,7 +344,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: color.withOpacity(0.1), shape: BoxShape.circle),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), shape: BoxShape.circle),
             child: Icon(icon, size: 24, color: color),
           ),
           const SizedBox(height: 8),

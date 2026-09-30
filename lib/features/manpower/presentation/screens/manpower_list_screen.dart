@@ -2,75 +2,91 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/loading_widget.dart';
-import '../../../auth/presentation/providers/login_provider.dart';
 import '../../data/models/manpower_item.dart';
-import '../../data/datasource/manpower_cud_datasource.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 
-class ManpowerListScreen extends ConsumerStatefulWidget {
-  const ManpowerListScreen({super.key});
+// State for manpower list
+class ManpowerListState {
+  final List<ManpowerItem> items;
+  final bool loading;
+  final String? error;
+  final String? sectionFilter;
 
-  @override
-  ConsumerState<ManpowerListScreen> createState() => _ManpowerListScreenState();
+  const ManpowerListState({
+    this.items = const [],
+    this.loading = true,
+    this.error,
+    this.sectionFilter,
+  });
+
+  ManpowerListState copyWith({
+    List<ManpowerItem>? items,
+    bool? loading,
+    String? error,
+    String? sectionFilter,
+  }) {
+    return ManpowerListState(
+      items: items ?? this.items,
+      loading: loading ?? this.loading,
+      error: error ?? this.error,
+      sectionFilter: sectionFilter ?? this.sectionFilter,
+    );
+  }
 }
 
-class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
-  List<ManpowerItem> _items = [];
-  bool _loading = true;
-  String? _error;
-  String? _sectionFilter;
-
+// Notifier for manpower list (using Riverpod 2.x Notifier)
+class ManpowerListNotifier extends Notifier<ManpowerListState> {
   @override
-  void initState() {
-    super.initState();
-    _load();
+  ManpowerListState build() {
+    return const ManpowerListState();
   }
 
-  Future<void> _load() async {
-    setState(() => _loading = true);
+  Future<void> load() async {
+    state = state.copyWith(loading: true);
     try {
       final ds = ref.read(dioClientProvider);
       final dio = ds.dio;
       final params = <String, dynamic>{'page': 1, 'page_size': 500};
-      if (_sectionFilter != null) params['section'] = _sectionFilter;
+      if (state.sectionFilter != null) params['section'] = state.sectionFilter;
       final resp = await dio.get('/manpower', queryParameters: params);
       final data = resp.data as Map<String, dynamic>;
-      _items = (data['data'] as List? ?? [])
+      final items = (data['data'] as List? ?? [])
           .map((e) => ManpowerItem.fromJson(e as Map<String, dynamic>))
           .toList();
-      _error = null;
+      state = state.copyWith(items: items, loading: false, error: null);
     } catch (e) {
-      _error = e.toString();
+      state = state.copyWith(loading: false, error: e.toString());
     }
-    if (mounted) setState(() => _loading = false);
   }
 
-  Future<void> _deleteConfirm(ManpowerItem item) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Hapus?'),
-        content: Text('Hapus ${item.nama} (${item.nrp})?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), style: FilledButton.styleFrom(backgroundColor: Colors.red), child: const Text('Hapus')),
-        ],
-      ),
-    );
-    if (ok != true) return;
+  Future<void> delete(ManpowerItem item) async {
     try {
       final ds = ref.read(dioClientProvider);
       await ds.dio.delete('/manpower/${item.id}');
-      await _load();
+      await load();
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Gagal hapus: $e'), backgroundColor: Colors.red));
+      state = state.copyWith(error: e.toString());
     }
   }
 
+  void setSectionFilter(String? section) {
+    state = state.copyWith(sectionFilter: section);
+    load();
+  }
+}
+
+// Provider
+final manpowerListProvider = NotifierProvider<ManpowerListNotifier, ManpowerListState>(ManpowerListNotifier.new);
+
+class ManpowerListScreen extends ConsumerWidget {
+  const ManpowerListScreen({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(manpowerListProvider);
+    final notifier = ref.read(manpowerListProvider.notifier);
     final theme = Theme.of(context);
-    final sections = _items.map((e) => e.section).where((s) => s.isNotEmpty).toSet().toList()..sort();
+    final sections = state.items.map((e) => e.section).where((s) => s.isNotEmpty).toSet().toList()..sort();
 
     return Scaffold(
       appBar: AppBar(
@@ -78,21 +94,18 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
         backgroundColor: theme.colorScheme.primary,
         foregroundColor: Colors.white,
         actions: [
-          if (_sectionFilter != null)
+          if (state.sectionFilter != null)
             IconButton(
               icon: const Icon(Icons.clear),
               tooltip: 'Hapus filter',
-              onPressed: () {
-                setState(() => _sectionFilter = null);
-                _load();
-              },
+              onPressed: () => notifier.setSectionFilter(null),
             ),
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: 'Tambah Manpower',
             onPressed: () async {
               final result = await context.push('/manpower-form');
-              if (result == true) _load();
+              if (result == true) notifier.load();
             },
           ),
         ],
@@ -109,39 +122,44 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
                 children: [
                   ChoiceChip(
                     label: const Text('Semua', style: TextStyle(fontSize: 12)),
-                    selected: _sectionFilter == null,
-                    onSelected: (_) => setState(() { _sectionFilter = null; _load(); }),
+                    selected: state.sectionFilter == null,
+                    onSelected: (_) => notifier.setSectionFilter(null),
                     visualDensity: VisualDensity.compact,
                   ),
                   const SizedBox(width: 6),
                   ...sections.map((s) => Padding(
-                    padding: const EdgeInsets.only(right: 6),
-                    child: ChoiceChip(
-                      label: Text(s, style: const TextStyle(fontSize: 12)),
-                      selected: _sectionFilter == s,
-                      onSelected: (_) => setState(() { _sectionFilter = s; _load(); }),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  )),
+                        padding: const EdgeInsets.only(right: 6),
+                        child: ChoiceChip(
+                          label: Text(s, style: const TextStyle(fontSize: 12)),
+                          selected: state.sectionFilter == s,
+                          onSelected: (_) => notifier.setSectionFilter(s),
+                          visualDensity: VisualDensity.compact,
+                        ),
+                      )),
                 ],
               ),
             ),
           ),
           // Table
           Expanded(
-            child: _loading
+            child: state.loading
                 ? const LoadingWidget(message: 'Memuat...')
-                : _error != null
-                    ? Center(child: Column(children: [Icon(Icons.error, color: Colors.red[300], size: 40), const SizedBox(height: 8), Text(_error!), ElevatedButton(onPressed: _load, child: const Text('Ulangi'))]))
+                : state.error != null
+                    ? Center(child: Column(children: [
+                        Icon(Icons.error, color: Colors.red[300], size: 40),
+                        const SizedBox(height: 8),
+                        Text(state.error!),
+                        ElevatedButton(onPressed: () => notifier.load(), child: const Text('Ulangi')),
+                      ]))
                     : RefreshIndicator(
-                        onRefresh: _load,
-                        child: _items.isEmpty
+                        onRefresh: () => notifier.load(),
+                        child: state.items.isEmpty
                             ? const Center(child: Text('Belum ada data manpower'))
                             : ListView.separated(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                itemCount: _items.length,
+                                itemCount: state.items.length,
                                 separatorBuilder: (_, __) => const Divider(height: 1),
-                                itemBuilder: (ctx, i) => _itemCard(_items[i]),
+                                itemBuilder: (ctx, i) => _itemCard(context, ref, state.items[i], notifier),
                               ),
                       ),
           ),
@@ -150,9 +168,10 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
     );
   }
 
-  Widget _itemCard(ManpowerItem item) {
+  Widget _itemCard(BuildContext context, WidgetRef ref, ManpowerItem item, ManpowerListNotifier notifier) {
     final theme = Theme.of(context);
     final isNotActive = !item.isActive;
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -161,7 +180,7 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
         borderRadius: BorderRadius.circular(12),
         onTap: () async {
           final result = await context.push('/manpower-form', extra: item);
-          if (result == true) _load();
+          if (result == true) notifier.load();
         },
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -197,8 +216,12 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
               ),
               PopupMenuButton<String>(
                 onSelected: (v) {
-                  if (v == 'edit') context.push('/manpower-form', extra: item).then((r) { if (r == true) _load(); });
-                  if (v == 'delete') _deleteConfirm(item);
+                  if (v == 'edit') {
+                    context.push('/manpower-form', extra: item).then((r) {
+                      if (r == true) notifier.load();
+                    });
+                  }
+                  if (v == 'delete') _deleteConfirm(context, ref, item, notifier);
                 },
                 itemBuilder: (_) => [
                   const PopupMenuItem(value: 'edit', child: Row(children: [Icon(Icons.edit, size: 18), SizedBox(width: 8), Text('Edit')])),
@@ -212,11 +235,32 @@ class _ManpowerListScreenState extends ConsumerState<ManpowerListScreen> {
     );
   }
 
+  Future<void> _deleteConfirm(BuildContext context, WidgetRef ref, ManpowerItem item, ManpowerListNotifier notifier) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Hapus?'),
+        content: Text('Hapus ${item.nama} (${item.nrp})?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Batal')),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text('Hapus'),
+          ),
+        ],
+      ),
+    );
+    if (ok == true) {
+      await notifier.delete(item);
+    }
+  }
+
   Widget _badge(String text, Color color) {
     if (text.isEmpty) return const SizedBox.shrink();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
       child: Text(text, style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w500)),
     );
   }
